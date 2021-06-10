@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="testModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="before_stemmer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="doc_id" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="term" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="crawler_data">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="content_data" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="tockenzs" Relationship="Self.FK_tockenz_tockenz" FromRole="crawler_data" ToRole="tockenz" />
+  </EntityType>
+  <EntityType Name="tockenz">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="sring" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="doc_no" Type="Int32" />
+    <Property Name="position" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="frequency" Type="Int32" />
+    <NavigationProperty Name="crawler_data" Relationship="Self.FK_tockenz_tockenz" FromRole="tockenz" ToRole="crawler_data" />
+  </EntityType>
+  <Association Name="FK_tockenz_tockenz">
+    <End Role="crawler_data" Type="Self.crawler_data" Multiplicity="0..1" />
+    <End Role="tockenz" Type="Self.tockenz" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="crawler_data">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tockenz">
+        <PropertyRef Name="doc_no" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="testEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="before_stemmer" EntityType="Self.before_stemmer" />
+    <EntitySet Name="crawler_data" EntityType="Self.crawler_data" />
+    <EntitySet Name="tockenzs" EntityType="Self.tockenz" />
+    <AssociationSet Name="FK_tockenz_tockenz" Association="Self.FK_tockenz_tockenz">
+      <End Role="crawler_data" EntitySet="crawler_data" />
+      <End Role="tockenz" EntitySet="tockenzs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

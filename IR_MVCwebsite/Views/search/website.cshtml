@@ -1,0 +1,18 @@
+﻿@model IR_MVCwebsite.Models.search
+@{
+    ViewBag.Title = "website";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>website</h2>
+<h2>Bingo Search</h2>
+@using (Html.BeginForm("resultlinks", "search"))
+{
+    <div class="form-group">
+        <label for="search">search</label>
+        @Html.TextBoxFor(m => m.seach_phrase, new { @class = "form-control" })
+    </div>
+    <button type="submit">search</button>
+}
+
+

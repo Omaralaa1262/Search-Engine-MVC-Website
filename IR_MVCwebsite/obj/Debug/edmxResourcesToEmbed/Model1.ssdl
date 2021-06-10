@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="testModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="before_stemmer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="doc_id" Type="nvarchar(max)" />
+    <Property Name="term" Type="nvarchar(max)" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="crawler_data">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="URL" Type="varchar(max)" Nullable="false" />
+    <Property Name="content_data" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tockenz">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="sring" Type="nvarchar(max)" />
+    <Property Name="doc_no" Type="int" />
+    <Property Name="position" Type="nvarchar(max)" />
+    <Property Name="frequency" Type="int" />
+  </EntityType>
+  <Association Name="FK_tockenz_tockenz">
+    <End Role="crawler_data" Type="Self.crawler_data" Multiplicity="0..1" />
+    <End Role="tockenz" Type="Self.tockenz" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="crawler_data">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="tockenz">
+        <PropertyRef Name="doc_no" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="testModelStoreContainer">
+    <EntitySet Name="before_stemmer" EntityType="Self.before_stemmer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="crawler_data" EntityType="Self.crawler_data" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tockenz" EntityType="Self.tockenz" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_tockenz_tockenz" Association="Self.FK_tockenz_tockenz">
+      <End Role="crawler_data" EntitySet="crawler_data" />
+      <End Role="tockenz" EntitySet="tockenz" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

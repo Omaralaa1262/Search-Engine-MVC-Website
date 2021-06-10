@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="testModelStoreContainer" CdmEntityContainer="testEntities1">
+    <EntitySetMapping Name="before_stemmer">
+      <EntityTypeMapping TypeName="testModel.before_stemmer">
+        <MappingFragment StoreEntitySet="before_stemmer">
+          <ScalarProperty Name="doc_id" ColumnName="doc_id" />
+          <ScalarProperty Name="term" ColumnName="term" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="crawler_data">
+      <EntityTypeMapping TypeName="testModel.crawler_data">
+        <MappingFragment StoreEntitySet="crawler_data">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="content_data" ColumnName="content_data" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tockenzs">
+      <EntityTypeMapping TypeName="testModel.tockenz">
+        <MappingFragment StoreEntitySet="tockenz">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="sring" ColumnName="sring" />
+          <ScalarProperty Name="doc_no" ColumnName="doc_no" />
+          <ScalarProperty Name="position" ColumnName="position" />
+          <ScalarProperty Name="frequency" ColumnName="frequency" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

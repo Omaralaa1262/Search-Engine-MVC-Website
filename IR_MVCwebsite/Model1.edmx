@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="testModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="before_stemmer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="doc_id" Type="nvarchar(max)" />
+          <Property Name="term" Type="nvarchar(max)" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="crawler_data">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="URL" Type="varchar(max)" Nullable="false" />
+          <Property Name="content_data" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tockenz">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sring" Type="nvarchar(max)" />
+          <Property Name="doc_no" Type="int" />
+          <Property Name="position" Type="nvarchar(max)" />
+          <Property Name="frequency" Type="int" />
+        </EntityType>
+        <Association Name="FK_tockenz_tockenz">
+          <End Role="crawler_data" Type="Self.crawler_data" Multiplicity="0..1" />
+          <End Role="tockenz" Type="Self.tockenz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="crawler_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tockenz">
+              <PropertyRef Name="doc_no" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="testModelStoreContainer">
+          <EntitySet Name="before_stemmer" EntityType="Self.before_stemmer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="crawler_data" EntityType="Self.crawler_data" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tockenz" EntityType="Self.tockenz" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tockenz_tockenz" Association="Self.FK_tockenz_tockenz">
+            <End Role="crawler_data" EntitySet="crawler_data" />
+            <End Role="tockenz" EntitySet="tockenz" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="testModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="before_stemmer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="doc_id" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="term" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="crawler_data">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="content_data" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tockenzs" Relationship="Self.FK_tockenz_tockenz" FromRole="crawler_data" ToRole="tockenz" />
+        </EntityType>
+        <EntityType Name="tockenz">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sring" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="doc_no" Type="Int32" />
+          <Property Name="position" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="frequency" Type="Int32" />
+          <NavigationProperty Name="crawler_data" Relationship="Self.FK_tockenz_tockenz" FromRole="tockenz" ToRole="crawler_data" />
+        </EntityType>
+        <Association Name="FK_tockenz_tockenz">
+          <End Role="crawler_data" Type="Self.crawler_data" Multiplicity="0..1" />
+          <End Role="tockenz" Type="Self.tockenz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="crawler_data">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tockenz">
+              <PropertyRef Name="doc_no" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="testEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="before_stemmer" EntityType="Self.before_stemmer" />
+          <EntitySet Name="crawler_data" EntityType="Self.crawler_data" />
+          <EntitySet Name="tockenzs" EntityType="Self.tockenz" />
+          <AssociationSet Name="FK_tockenz_tockenz" Association="Self.FK_tockenz_tockenz">
+            <End Role="crawler_data" EntitySet="crawler_data" />
+            <End Role="tockenz" EntitySet="tockenzs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="testModelStoreContainer" CdmEntityContainer="testEntities1">
+          <EntitySetMapping Name="before_stemmer">
+            <EntityTypeMapping TypeName="testModel.before_stemmer">
+              <MappingFragment StoreEntitySet="before_stemmer">
+                <ScalarProperty Name="doc_id" ColumnName="doc_id" />
+                <ScalarProperty Name="term" ColumnName="term" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="crawler_data">
+            <EntityTypeMapping TypeName="testModel.crawler_data">
+              <MappingFragment StoreEntitySet="crawler_data">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="content_data" ColumnName="content_data" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tockenzs">
+            <EntityTypeMapping TypeName="testModel.tockenz">
+              <MappingFragment StoreEntitySet="tockenz">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="sring" ColumnName="sring" />
+                <ScalarProperty Name="doc_no" ColumnName="doc_no" />
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="frequency" ColumnName="frequency" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
